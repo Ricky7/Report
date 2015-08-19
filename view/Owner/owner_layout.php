@@ -14,21 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../../public/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../public/stylesheets/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="../../public/stylesheets/owner_layout.css">
-   
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
-    /*<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->*/
-    <script type="text/javascript">
-    //$.noConflict();
-	$(document).ready(function() {
-	//$.ajaxSetup({ cache: false });
-	  $('a.lnk').click(function() {
-	  	var url = $(this).attr('href');
-	    $('#content').html('<h4>Loading...</h4>').load(url);
-	    return false;
-	  });
-	});
-	</script>
-    
+           
 </head>
 <body>
 <nav class="navbar navbar-findcond navbar-fixed-top">
@@ -56,16 +42,16 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Menu <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="form_input_stock.php" class="lnk">Input Stock</a></li>
-						<li><a href="form_warna.php" class="lnk">warna</a></li>
+						<li><a href="form_input_stock.php">Input Stock</a></li>
+						<li><a href="form_warna.php">warna</a></li>
 						<li class="divider"></li>
 						<li><a href="#">Ayarlar</a></li>
 						<li><a href="#">Logout</a></li>
 					</ul>
 				</li>
-				<li class="active"><a href="#"><?php echo $_SESSION['username']; ?> <span class="sr-only">(current)</span></a></li>
+				<li class="active"><a href="#">Menu<span class="sr-only">(current)</span></a></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $_SESSION['username']; ?> <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#">Geri bildirim</a></li>
 						<li><a href="#">Yardım</a></li>

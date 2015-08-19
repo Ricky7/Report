@@ -1,7 +1,7 @@
 <?php
-session_start();
-include "../../inc/koneksi.php";
-//include "owner_layout.php";
+	
+	include "../../inc/koneksi.php";
+	include "owner_layout.php";
 ?>
 <style type="text/css">
 /* Adjust feedback icon position */
@@ -36,7 +36,7 @@ $(function() {
 	
 	if(item_name=='' || item_brand=='' || item_type=='' || material=='' || made_in=='' || item_size=='' || item_color=='' || purchase_price=='' || selling_price=='')
 	{
-		alert("Kosong");
+		alert("Ada form yang Kosong...");
 	}
 	else
 	{

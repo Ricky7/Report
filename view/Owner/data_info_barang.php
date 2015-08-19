@@ -1,4 +1,28 @@
-<div class="row">
+
+<script type="text/javascript">
+$(function() {
+$(".hapus").click(function() {
+	var id = $(this).attr("id");
+	var dataString = 'id='+ id ;
+	var parent = $(this).parent();
+	if (confirm('Are you sure you want to delete this?')) {
+		$.ajax({
+			type: "POST",
+			url: "delete_stockBarang.php",
+			data: dataString,
+			cache: false,
+
+			success: function(html)
+			{
+				//alert("berhasil dihapus");
+			}
+		});
+	}
+	return false;
+	});
+});
+</script>
+<div class="row table-responsive">
 	<table class="table table-hover table-responsive" align="center">
 		<thead>
 			<tr>
@@ -8,6 +32,7 @@
 				<th>Harga Beli</th>
 				<th>Harga Jual</th>
 				<th>Keterangan</th>
+				<th>Opsi</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -41,6 +66,7 @@
 						}
 					?>
 				</td>
+				<td><a class='btn btn-info btn-xs' href="#" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" id="<?php echo $data['item_code'] ?>" class="hapus btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
 			</tr>
 			<?php
 				//$no++;

@@ -1,5 +1,7 @@
 <?php
-	session_start();
+	
+	include "../../inc/koneksi.php";
+	include "owner_layout.php";
 ?>
 <style type="text/css">
 .green
