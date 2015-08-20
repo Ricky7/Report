@@ -1,5 +1,3 @@
-
-
 <script type="application/javascript">
 $(document).on('click','.submit',function() {
 // $(function() {
@@ -109,8 +107,8 @@ $(document).on('click','.submit',function() {
 	    <div class="form-group">
 	        <div class="row">
 	            <div class="col-xs-12" align="center">
-				<input type="submit" id="submit" class="submit btn btn-primary" value="submit"></button>
-				<a href="info_barang.php?id=<?php echo $id ?>"><input type="button" value="Close" class="btn" /></a>
+				<input type="submit" id="submit" class="submit btn btn-xs btn-primary" value="submit"></button>
+				<a href="info_barang.php?id=<?php echo $id ?>"><input type="button" value="Close" class="btn btn-xs" /></a>
 				</div>
 	        </div>
 	    </div>

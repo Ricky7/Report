@@ -39,7 +39,7 @@ $(".hapus").click(function() {
 			<?php
 				include "../../inc/koneksi.php";
 				$item_id = $_GET['id'];
-				$query = mysql_query("select * from tb_purchase inner join tb_sell on tb_purchase.item_code=tb_sell.item_code where tb_sell.item_id=$item_id");
+				$query = mysql_query("select * from tb_purchase inner join tb_sell on tb_purchase.item_code=tb_sell.item_code where tb_sell.item_id=$item_id AND tb_sell.status='ada'");
 
 				//$no = 1;
 				if($query === FALSE) { 
@@ -66,7 +66,7 @@ $(".hapus").click(function() {
 						}
 					?>
 				</td>
-				<td><a class='btn btn-info btn-xs' href="#" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" id="<?php echo $data['item_code'] ?>" class="hapus btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+				<td><a class='btn btn-info btn-xs' href="edit_dataStock.php?id=<?php echo $data['item_code'] ?>" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" id="<?php echo $data['item_code'] ?>" class="hapus btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a> <a class='btn btn-success btn-xs' href="jual_barang.php?slug=<?php echo $data['item_code'] ?>" ><span class="glyphicon glyphicon-edit"></span> Sell</a></td>
 			</tr>
 			<?php
 				//$no++;

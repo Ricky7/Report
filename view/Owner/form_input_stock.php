@@ -3,6 +3,7 @@
 	include "../../inc/koneksi.php";
 	include "owner_layout.php";
 ?>
+
 <style type="text/css">
 /* Adjust feedback icon position */
 #movieForm .form-control-feedback {
@@ -64,6 +65,7 @@ $(function() {
 	});
 });
 </script>
+
 <div class="container">
 	<div class="row">
 		<br><br><br><br>
