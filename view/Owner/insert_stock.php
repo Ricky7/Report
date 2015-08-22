@@ -15,8 +15,8 @@
     mysqli_autocommit($conn, FALSE);
     // many to many relation query
     //$date = date('Y-m-d',  strtotime($_POST['purchase_date']));
-    $sql = "INSERT INTO tb_info_item (item_name,item_brand,item_type,material,made_in)
-    VALUES ('{$_POST['item_name']}', '{$_POST['item_brand']}', '{$_POST['item_type']}', '{$_POST['material']}', '{$_POST['made_in']}');";
+    $sql = "INSERT INTO tb_info_item (item_name,item_type,kode)
+    VALUES ('{$_POST['item_name']}', '{$_POST['item_type']}', '{$_POST['kode']}');";
     $result = mysqli_query($conn, $sql);
     if ($result !== TRUE) {
         mysqli_rollback($conn); //kalau ada error di query ini, akan di rollback

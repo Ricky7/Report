@@ -35,10 +35,10 @@
 		<div id="status" align="center"></div>
 		<div class="col-xs-12" id="div1" align="center">
 			<label>Nama Barang : </label> <span ><?php echo $data['item_name']; ?></span><br>
-			<label>Merk Produk : </label> <?php echo $data['item_brand']; ?><br>
+			<label>Merk Produk : </label> ----<br>
 			<label>Jenis Produk : </label> <?php echo $data['item_type']; ?><br>
-			<label>Bahan Produk : </label> <?php echo $data['material']; ?><br>
-			<label>Buatan : </label> <?php echo $data['made_in']; ?><br>
+			<label>Bahan Produk : </label> ----<br>
+			<label>Kode : </label> <?php echo "<b><font color='red'>".strtoupper($data['kode'])."</font></b>" ?><br>
 		</div>
 	</div>
 </div>

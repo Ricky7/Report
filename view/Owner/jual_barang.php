@@ -18,11 +18,11 @@
 		<div align="center">
 			<img src="../../public/images/default-placeholder.png" width="160" height="250" class="img-responsive"/><br>
 			<label>Nama Item :</label> <?php echo $data['item_name'] ?><br>
-			<label>Merk Item :</label> <?php echo $data['item_brand'] ?><br>
+			<label>Merk Item :</label> ----<br>
 			<label>Jenis Item :</label> <?php echo $data['item_type'] ?><br>
-			<label>Bahan :</label> <?php echo $data['material'] ?><br>
-			<label>Buatan :</label> <?php echo $data['made_in'] ?><br>
-			<label>Kode Item :</label> <?php echo "<b><font color='red'>".$data['item_code']."</font></b>" ?><br>
+			<label>Bahan :</label> ----<br>
+			<label>Buatan :</label> ----<br>
+			<label>Kode Item :</label> <?php echo "<b><font color='red'>".strtoupper($data['kode'])."</font></b>" ?><br>
 			<label>Ukuran :</label> <?php echo $data['item_size'] ?><br>
 			<label>Warna :</label> <?php echo $data['item_color'] ?><br>
 			<label>Harga Beli :</label> <?php echo "Rp ".number_format($data['purchase_price'],$jumlah_desimal, $pemisah_desimal, $pemisah_ribuan); ?><br>
@@ -38,9 +38,17 @@
 				<input type="hidden" name="item_code" value="<?php echo $data['item_code'] ?>">
 				<input type="hidden" name="status" value="sold">
 				<input type="hidden" name="sold_by" value="<?php echo $_SESSION['username']; ?>">
-				<input type="text" name="sold_price" required="required" class="form-control">
+				<input type="text" name="sold_price" id="sold_price" required="required" class="form-control">
 				<div style="margin-top:5px;margin-bottom:5px;"><input type="submit" value="submit" class="submit btn btn-primary"><div>
 			</form>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript" src="../../public/javascripts/jquery.maskMoney.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#sold_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+		
+	});
+</script>

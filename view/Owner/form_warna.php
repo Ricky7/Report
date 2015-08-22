@@ -127,7 +127,7 @@ $(function() {
         	<div class="col-xs-6 selectContainer">
                 <label class="control-label">Tambah Warna</label>
 				<form method="POST" id="myForm">
-					<input type="text" class="form-control" name="item_color" required="required" id="item_color" required="required"/>
+					<input type="text" class="form-control" name="item_color" id="item_color" required="required"/>
 					<div id="status"></div>
 					<input type="submit" name="submit" value="submit" class="submit btn btn-primary" id="submit">
 				</form>

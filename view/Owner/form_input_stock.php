@@ -14,28 +14,97 @@
 	}
 </style>
 
-
+<style type="text/css">
+.green
+{
+	background-color:#CEFFCE;
+}
+.red
+{
+	background-color:#FFD9D9;
+}
+</style>
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/
-libs/jquery/1.3.0/jquery.min.js"></script>
-<script type="text/javascript" >
+
+<script src="../../public/javascripts/jqueryAva.js" type="text/javascript"></script>
+<!-- cek kode -->
+<script type="text/javascript">
+pic1 = new Image(16, 16); 
+pic1.src = "../../public/images/loader.gif";
+
+$(document).ready(function(){
+	document.getElementById("submit").disabled = true;
+	$("#kode").change(function() { 
+
+		var kd = $("#kode").val();
+
+		if(kd.length >= 3)
+		{
+
+			$("#info2").html('<img align="absmiddle" src="../../public/images/loader.gif" /> Checking availability...');
+
+			$.ajax({ 
+			type: "POST", 
+			url: "cek_kode.php", 
+			data: "kode="+ kd, 
+				success: function(msg){ 
+					
+					$("#info2").ajaxComplete(function(event, request, settings){ 
+						
+							if(msg == 'OK')
+							{ 
+								document.getElementById("submit").disabled = false;
+								// disable tombol enter
+								$('#form1').keypress(function(event){
+								    if (event.keyCode == 10 || event.keyCode == 13) 
+								        event.preventDefault();
+								});
+								$("#kode").removeClass('red'); // textbox background
+								$("#kode").addClass("green");
+								$(this).html(' <img align="absmiddle" src="../../public/images/accepted.png" />');
+							} 
+							else 
+							{ 	
+								document.getElementById("submit").disabled = true;
+								$("#kode").removeClass('green'); 
+								$("#kode").addClass("red");
+								$(this).html(' <img align="absmiddle" src="../../public/images/rejected.png" />');
+							}
+							
+					});
+					
+				}
+			});
+		}
+		else
+		{
+			$("#info1").html('The kode should have at least 3 characters.');
+			$("#kode").removeClass('green'); // if necessary
+			$("#kode").addClass("red");
+		}
+	});
+});
+
+//-->
+
+</script>
+<!-- ajax submit -->
+<script type="text/javascript">
 $(function() {
 	$(".submit").click(function() {
+	var kode = $("#kode").val();
 	var item_name = $("#item_name").val();
-	var item_brand = $("#item_brand").val();
 	var item_type = $("#item_type").val();
-	var material = $("#material").val();
-	var made_in = $("#made_in").val();
 	var item_size = $("#item_size").val();
 	var item_color = $("#item_color").val();
 	var purchase_price = $("#purchase_price").val();
 	var selling_price = $("#selling_price").val();
 	var information = $("#information").val();
-	var dataString = 'item_name='+ item_name + '&item_brand=' + item_brand + '&item_type=' + item_type + '&material=' + material + '&made_in=' + made_in + '&item_size=' + item_size + '&item_color=' + item_color + '&purchase_price=' + purchase_price + '&selling_price=' + selling_price + '&information=' + information;
+	var dataString = 'kode='+ kode  + '&item_name='+ item_name  + '&item_type=' + item_type + '&item_size=' + item_size + '&item_color=' + item_color + '&purchase_price=' + purchase_price + '&selling_price=' + selling_price + '&information=' + information;
 
 	
-	if(item_name=='' || item_brand=='' || item_type=='' || material=='' || made_in=='' || item_size=='' || item_color=='' || purchase_price=='' || selling_price=='')
+	if(kode=='' || item_name=='' || item_type=='' || item_size=='' || item_color=='' || purchase_price=='' || selling_price=='')
 	{
 		alert("Ada form yang Kosong...");
 	}
@@ -48,11 +117,9 @@ $(function() {
 			cache: false,
 			success: function(html){
 				$('.success').fadeIn(200).show();
+				document.getElementById('kode').value='';
 				document.getElementById('item_name').value='';
-				document.getElementById('item_brand').value='';
 				document.getElementById('item_type').value='';
-				document.getElementById('material').value='';
-				document.getElementById('made_in').value='';
 				document.getElementById('item_size').value='';
 				document.getElementById('item_color').value='';
 				document.getElementById('purchase_price').value='';
@@ -66,46 +133,22 @@ $(function() {
 });
 </script>
 
-<div class="container">
+<div class="container" style="margin-top:70px;">
 	<div class="row">
-		<br><br><br><br>
-	</div>
-	<div class="row">
-		<?php
-			if (!empty($_GET['message']) && $_GET['message'] == 'success') {
-				echo '<h3 align="center"><font color="Green"><i>SUCCESS!</i></font></h3>';
-			}
-			else if (!empty($_GET['message']) && $_GET['message'] == 'failed') {
-				echo '<h3 align="center"><font color="Red"><i>FAILED!</i></font></h3>';
-			}
-		?>
 		<span class="success" style="display:none" align="center">Successfully</span>
-		<form method="POST">
+		<form method="POST" id="form1">
 			<div class="form-group">
 		        <div class="row">
+		        	<div class="col-xs-4 selectContainer">
+		                <label class="control-label">Kode <span id="info2"></span></label>
+		                <input type="text" class="form-control" name="kode" id="kode" required="required">
+		                <div id="info1"></div>
+		            </div>
 		            <div class="col-xs-8">
 		                <label class="control-label">Nama Produk</label>
-		                <input type="text" class="form-control" name="item_name" id="item_name"/>
+		                <input type="text" class="form-control" name="item_name" id="item_name" required="required"/>
 		            </div>
 
-		            <div class="col-xs-4 selectContainer">
-		                <label class="control-label">Merk</label>
-		                <select class="form-control" name="item_brand" id="item_brand" required="required">
-		                    <option value="">Choose</option>
-		                <?php
-							$query = mysql_query("select * from tb_brand");
-							$no = 1;
-							while ($data = mysql_fetch_array($query)) {
-						?>
-					  		<option value="<?php echo $data['merk'] ?>"><?php echo $data['merk'] ?></option>
-					  	<?php 
-							$no++;
-						}
-						?>	     
-		                </select>
-		            </div>
-
-		            
 		        </div>
 		    </div>
 
@@ -129,46 +172,6 @@ $(function() {
 		            </div>
 
 		            <div class="col-xs-4 selectContainer">
-		                <label class="control-label">Bahan</label>
-		                <select class="form-control" name="material" id="material" required="required">
-		                    <option value="">Choose</option>
-		                <?php
-							$query = mysql_query("select * from tb_material");
-							$no = 1;
-							while ($data = mysql_fetch_array($query)) {
-						?>
-						  	<option value="<?php echo $data['bahan'] ?>"><?php echo $data['bahan'] ?></option>
-						<?php 
-							$no++;
-						}
-						?>	 
-		                </select>
-		            </div>
-
-		            <div class="col-xs-4 selectContainer">
-		                <label class="control-label">Buatan</label>
-		                <select class="form-control" name="made_in" id="made_in" required="required">
-		                    <option value="">Choose</option>
-		                <?php
-							$query = mysql_query("select * from tb_madein");
-							$no = 1;
-							while ($data = mysql_fetch_array($query)) {
-						?>
-					  		<option value="<?php echo $data['from'] ?>"><?php echo $data['from'] ?></option>
-					  	<?php 
-							$no++;
-						}
-						?>	    
-		                </select>
-		            </div>
-
-		            
-		        </div>
-		    </div>
-
-			<div class="form-group">
-		        <div class="row">
-		            <div class="col-xs-6 selectContainer">
 		                <label class="control-label">Ukuran</label>
 		                <select class="form-control" name="item_size" id="item_size" required="required">
 		                    <option value="">Choose</option>
@@ -185,7 +188,7 @@ $(function() {
 		                </select>
 		            </div>
 
-		            <div class="col-xs-6 selectContainer">
+		            <div class="col-xs-4 selectContainer">
 		                <label class="control-label">Warna</label>
 		                <select class="form-control" name="item_color" id="item_color" required="required">
 							<option value="">Choose</option>
@@ -206,7 +209,7 @@ $(function() {
 		        </div>
 		    </div>
 
-		    <div class="form-group">
+			<div class="form-group">
 		        <div class="row">
 		            <div class="col-xs-4">
 		                <label class="control-label">Harga Beli</label>
@@ -219,8 +222,7 @@ $(function() {
 		            </div>
 
 		            <div class="col-xs-4">
-		                <label class="control-label">Tanggal Beli</label>
-		                <input type="text" class="form-control" name="purchase_date" id="datepicker" required="required" disabled/>
+		                
 		            </div>
 		        </div>
 		    </div>
@@ -244,7 +246,8 @@ $(function() {
 	</div>
 <div>
 
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="../../public/javascripts/validasiAngka.js"></script>
+
 <!-- <script src="../../public/javascripts/jquery-1.10.2.js"></script> -->
 
 

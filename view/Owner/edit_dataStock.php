@@ -83,3 +83,12 @@
 		</form>
 	</div>
 </div>
+
+<script type="text/javascript" src="../../public/javascripts/jquery.maskMoney.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#purchase_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+		$('#selling_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+		
+	});
+</script>
