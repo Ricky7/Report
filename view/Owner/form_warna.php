@@ -128,7 +128,7 @@ $(function() {
                 <label class="control-label">Tambah Warna</label>
 				<form method="POST" id="myForm">
 					<input type="text" class="form-control" name="item_color" id="item_color" required="required"/>
-					<div id="status"></div>
+					<div id="status" style="margin-bottom:5px;"></div>
 					<input type="submit" name="submit" value="submit" class="submit btn btn-primary" id="submit">
 				</form>
 			</div>

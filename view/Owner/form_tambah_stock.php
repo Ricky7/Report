@@ -1,3 +1,10 @@
+<script type="text/javascript" src="../../public/javascripts/jquery.maskMoney.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('.pur').maskMoney({precision:0});
+		$('.sel').maskMoney({precision:0});
+	});
+</script>
 <script type="application/javascript">
 $(document).on('click','.submit',function() {
 // $(function() {
@@ -88,15 +95,15 @@ $(document).on('click','.submit',function() {
 	            </div>
 	            <div class="col-xs-4 selectContainer">
 	            	<label class="control-label">Harga Beli</label>
-		                <input type="text" class="form-control" name="purchase_price" id="purchase_price" required="required" placeholder="cth : 1000000"/>
-	            </div>
+		                <input type="text" class="pur form-control" name="purchase_price" id="purchase_price" required="required" placeholder="cth : 1000000"/>
+		        </div>
 	        </div>
 		</div>
 		<div class="form-group">
 	        <div class="row">
 	            <div class="col-xs-4 selectContainer">
 	            	<label class="control-label">Harga Jual</label>
-		                <input type="text" class="form-control" name="selling_price" id="selling_price" required="required" placeholder="cth : 1000000"/>
+		                <input type="text" class="sel form-control" name="selling_price" id="selling_price" required="required" placeholder="cth : 1000000"/>
 	            </div>
 	            <div class="col-xs-8 selectContainer">
 	            	<label class="control-label">Keterangan</label>
@@ -124,11 +131,5 @@ $(document).ready(function(){
 });
 </script>
 
-<script type="text/javascript" src="../../public/javascripts/jquery.maskMoney.min.js"></script>
-<script type="text/javascript">
-	$(function() {
-		$('#purchase_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
-		$('#selling_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
-		
-	});
-</script>
+
+

@@ -16,7 +16,18 @@
 	</div>
 	<div class="row">
 		<div align="center">
-			<img src="../../public/images/default-placeholder.png" width="160" height="250" class="img-responsive"/><br>
+			<?php
+				$image = $data['image'];
+
+				if ($image == ''){
+					echo '<img src="../../public/images/default-placeholder.png" width="160" height="220" class="img-responsive"/>';
+				}
+				else
+				{
+					echo '<img src="uploadedImages/'.$image.'" width="160" height="220" class="img-responsive"/>';
+				}
+			?>
+			<br>
 			<label>Nama Item :</label> <?php echo $data['item_name'] ?><br>
 			<label>Merk Item :</label> ----<br>
 			<label>Jenis Item :</label> <?php echo $data['item_type'] ?><br>
@@ -38,7 +49,7 @@
 				<input type="hidden" name="item_code" value="<?php echo $data['item_code'] ?>">
 				<input type="hidden" name="status" value="sold">
 				<input type="hidden" name="sold_by" value="<?php echo $_SESSION['username']; ?>">
-				<input type="text" name="sold_price" id="sold_price" required="required" class="form-control">
+				<input type="text" name="sold_price" id="sold_price" required="required" class="sold form-control">
 				<div style="margin-top:5px;margin-bottom:5px;"><input type="submit" value="submit" class="submit btn btn-primary"><div>
 			</form>
 		</div>
@@ -48,7 +59,7 @@
 <script type="text/javascript" src="../../public/javascripts/jquery.maskMoney.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$('#sold_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+		$('.sold').maskMoney({precision:0});
 		
 	});
 </script>

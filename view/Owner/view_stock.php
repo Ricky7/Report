@@ -53,12 +53,13 @@
 				$page_position = (($page_number-1) * $item_per_page);
 				
 				//SQL query that will fetch group of records depending on starting position and item per page. See SQL LIMIT clause
-				$results = $mysqli_conn->query("SELECT item_id, item_name FROM tb_info_item ORDER BY item_id DESC LIMIT $page_position, $item_per_page");
+				$results = $mysqli_conn->query("SELECT item_id, item_name, image FROM tb_info_item ORDER BY item_id DESC LIMIT $page_position, $item_per_page");
 				
 				//Display records fetched from database.
 				while($row = $results->fetch_assoc()) {
 					$item_id=$row['item_id'];
 					$item_name=$row['item_name'];
+					$image = $row['image'];
 					//Query stock
 		    		$stock = $mysqli_conn->query("SELECT Count(item_code) AS stock FROM tb_sell WHERE item_id=$item_id AND status='ada'");
 		    		while($data = $stock->fetch_assoc()) {
@@ -67,7 +68,15 @@
 		<div class="col-xs-3" id="list">
 			<div id="item">
 				<a href="info_barang.php?id=<?php echo $item_id ?>">
-				<img src="../../public/images/default-placeholder.png" width="160" height="220" class="img-responsive"/>
+					<?php
+						if ($image == ''){
+							echo '<img src="../../public/images/default-placeholder.png" width="160" height="220" class="img-responsive"/>';
+						}
+						else
+						{
+							echo '<img src="uploadedImages/'.$image.'" width="160" height="220" class="img-responsive"/>';
+						}
+					?>
 				<div align="center" style="margin-top:20px;"><span><?php echo $item_name ?></span></div>
 				</a>
 				<div align="center"><span>Stock <?php echo $data['stock'] ?></span></div>

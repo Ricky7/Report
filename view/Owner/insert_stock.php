@@ -1,21 +1,85 @@
 <?php
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "db_report";
+    if(strpos($_SERVER['HTTP_REFERER'], "?") > 0){
+        $returnURL = substr($_SERVER['HTTP_REFERER'], 0, strpos($_SERVER['HTTP_REFERER'], "?"));
+    }else{
+        $returnURL = $_SERVER['HTTP_REFERER'];
+    }
+    define('DB_SERVER', "localhost");
+    define('DB_USER', "root");
+    define('DB_PASSWORD', "");
+    define('DB_DATABASE', "db_report");
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    $mysqli = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);
+
+    if (!$mysqli) {
+        trigger_error('mysqli Connection failed! ' . htmlspecialchars(mysqli_connect_error()), E_USER_ERROR);
+    }
+    //mysqli_autocommit($conn, FALSE);
+    $item_name = filter_var($_POST['item_name'], FILTER_SANITIZE_STRING);
+    $item_type = filter_var($_POST['item_type'], FILTER_SANITIZE_STRING);
+    $kode = filter_var($_POST['kode'], FILTER_SANITIZE_STRING);
+
+    // Check image
+    $fileError = $_FILES['image']['error'];
+    // http://php.net/manual/en/features.file-upload.errors.php
+    if($fileError > 0){
+        header("Location:".$returnURL."?err=imgUploadError");
+        exit;
+    }
+    
+    $maxSize = 100000;
+    $fileType = $_FILES['image']['type'];
+    $fileSize = $_FILES['image']['size'];
+    $fileTempName = $_FILES['image']['tmp_name'];
+
+    $trueFileType = exif_imagetype($fileTempName);
+    $allowedFiles = array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG);
+    if (in_array($trueFileType, $allowedFiles)) {
+        if($fileSize > $maxSize){
+            header("Location:".$returnURL."?err=tooBig");
+            exit;
+        }else{
+            switch($trueFileType){
+                case 1 : $fileExt = ".gif";
+                break;
+                case 2: $fileExt = ".jpg";
+                break;
+                case 3 : $fileExt = ".png";
+                break;
+            }
+        }
+    }else{
+        header("Location:".$returnURL."?err=WrongFileType");
+        exit;
     }
 
-    mysqli_autocommit($conn, FALSE);
-    // many to many relation query
-    //$date = date('Y-m-d',  strtotime($_POST['purchase_date']));
-    $sql = "INSERT INTO tb_info_item (item_name,item_type,kode)
+    // Get the path to upload the image to
+    $myPathInfo = pathinfo($_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);
+    $currentDir = $myPathInfo['dirname'];
+    $imgDir = $currentDir . '/uploadedImages/';
+    // Insert the other data into the database, get the new ID and create the new filename
+    $stmt = $mysqli->prepare("INSERT INTO tb_info_item(item_name, item_type, kode) VALUES (?, ?, ?)");
+    $stmt->bind_param('sss', $item_name, $item_type, $kode);
+    $stmt->execute();
+    $newID = $stmt->insert_id;
+    $newFileName = $newID . $fileExt;
+    $stmt->close();
+
+    // Update the database with the new image filename
+    $stmt = $mysqli->prepare("UPDATE tb_info_item SET image = ? WHERE item_id = ?");
+    $stmt->bind_param('si', $newFileName, $newID);
+    $stmt->execute();
+    $stmt->close();
+
+    // Move the file and redirect
+    $newImgLocation = $imgDir . $newFileName;
+    if(move_uploaded_file($fileTempName, $newImgLocation)){
+        header("Location:".$returnURL);
+    }else{
+        header("Location:".$returnURL."?err=UploadProb");
+    }
+
+    /*$sql = "INSERT INTO tb_info_item (item_name,item_type,kode)
     VALUES ('{$_POST['item_name']}', '{$_POST['item_type']}', '{$_POST['kode']}');";
     $result = mysqli_query($conn, $sql);
     if ($result !== TRUE) {
@@ -50,7 +114,7 @@
 
     mysqli_commit($conn);
     mysqli_close($conn);
-    //header('location:form_input_stock.php?message=success');
+    //header('location:form_input_stock.php?message=success');*/
     
 ?>
 

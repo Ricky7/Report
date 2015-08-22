@@ -25,9 +25,17 @@
 			$query = mysql_query("select * from tb_info_item where item_id='$id'") or die(mysql_error());
 
 			$data = mysql_fetch_array($query);
+			$image = $data['image'];
+
+			if ($image == ''){
+				echo '<img src="../../public/images/default-placeholder.png" width="160" height="220" class="img-responsive"/>';
+			}
+			else
+			{
+				echo '<img src="uploadedImages/'.$image.'" width="160" height="220" class="img-responsive"/>';
+			}
 		?>
-			<img src="../../public/images/default-placeholder.png" width="160" height="250" class="img-responsive"/><br>
-			<a class='btn btn-info btn-xs' href="#" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a class='btn btn-warning btn-xs' href="info_barang_laku.php?id=<?php echo $data['item_id'] ?>" ><span class="glyphicon glyphicon-share"></span> Sold Out</a>
+			<br><a class='btn btn-info btn-xs' href="#" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a class='btn btn-warning btn-xs' href="info_barang_laku.php?id=<?php echo $data['item_id'] ?>" ><span class="glyphicon glyphicon-share"></span> Sold Out</a>
 		
 		</div>
 		

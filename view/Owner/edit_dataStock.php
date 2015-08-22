@@ -57,7 +57,7 @@
 	            </div>
 	            <div class="col-xs-4 selectContainer">
 	            	<label class="control-label">Harga Beli</label>
-		                <input type="text" class="form-control" name="purchase_price" id="purchase_price" required="required" value="<?php echo $dataStock['purchase_price'] ?>"/>
+		                <input type="text" class="pur form-control" name="purchase_price" id="purchase_price" required="required" value="<?php echo $dataStock['purchase_price'] ?>"/>
 	            </div>
 	        </div>
 		</div>
@@ -65,7 +65,7 @@
 	        <div class="row">
 	            <div class="col-xs-4 selectContainer">
 	            	<label class="control-label">Harga Jual</label>
-		                <input type="text" class="form-control" name="selling_price" id="selling_price" required="required" value="<?php echo $dataStock['selling_price'] ?>"/>
+		                <input type="text" class="sel form-control" name="selling_price" id="selling_price" required="required" value="<?php echo $dataStock['selling_price'] ?>"/>
 	            </div>
 	            <div class="col-xs-8 selectContainer">
 	            	<label class="control-label">Keterangan</label>
@@ -87,8 +87,7 @@
 <script type="text/javascript" src="../../public/javascripts/jquery.maskMoney.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$('#purchase_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
-		$('#selling_price').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
-		
+		$('.pur').maskMoney({precision:0});
+		$('.sel').maskMoney({precision:0});
 	});
 </script>
