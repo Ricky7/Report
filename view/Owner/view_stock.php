@@ -77,7 +77,7 @@
 							echo '<img src="uploadedImages/'.$image.'" width="160" height="220" class="img-responsive"/>';
 						}
 					?>
-				<div align="center" style="margin-top:20px;"><span><?php echo $item_name ?></span></div>
+				<div align="center" style="margin-top:5px;"><span><?php echo $item_name ?></span></div>
 				</a>
 				<div align="center"><span>Stock <?php echo $data['stock'] ?></span></div>
 			</div>
