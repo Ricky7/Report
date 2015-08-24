@@ -137,7 +137,7 @@ $(function() {
 				<div id="flash"></div>
 				<div id="display"></div>
 				<div id="loadDataWarna"></div>
-				<div id="loader" align="center"><img src="../../public/images/ajax-loader-blue.gif" /></div>
+				<div id="loader" align="center" style="margin-top:50px;"><img src="../../public/images/ajax-loader.gif" /></div>
 			</div>
 		</div>
 	</div>

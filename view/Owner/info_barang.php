@@ -1,5 +1,4 @@
 <?php
-	
 	include "owner_layout.php";
 ?>
 <style>
@@ -28,17 +27,29 @@
 			$image = $data['image'];
 
 			if ($image == ''){
-				echo '<img src="../../public/images/default-placeholder.png" width="160" height="220" class="img-responsive"/>';
+				echo '<img src="../../public/images/default-placeholder.png" width="160" height="220" class="im1 img-responsive"/>';
 			}
 			else
 			{
-				echo '<img src="uploadedImages/'.$image.'" width="160" height="220" class="img-responsive"/>';
+				echo '<img src="uploadedImages/'.$image.'" width="160" height="220" class="im1 img-responsive"/>';
 			}
 		?>
-			<br><a class='btn btn-info btn-xs' href="#" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a class='btn btn-warning btn-xs' href="info_barang_laku.php?id=<?php echo $data['item_id'] ?>" ><span class="glyphicon glyphicon-share"></span> Sold Out</a>
+			<br><a class='btn btn-info btn-xs' href="edit_infoBarang.php?id=<?php echo htmlspecialchars($data['item_id']); ?>" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a class='btn btn-warning btn-xs' href="info_barang_laku.php?id=<?php echo $data['item_id'] ?>" ><span class="glyphicon glyphicon-share"></span> Sold Out</a>
 		
 		</div>
 		
+	</div>
+	<div class="row">
+		<div class="col-xs-12" id="div1" align="center">
+			<form method="POST" action="upload_image.php" enctype="multipart/form-data">
+				<div id="editImg" style="display:none;margin-bottom:30px;" align="center">
+					<input type="hidden" id="item_id" name="item_id" value="<?php echo $data['item_id']; ?>">
+					<br><font size='0.5px'>Upload maks 100Kb :</font><input type="file" class='btn btn-info btn-xs' name="image" id="image" accept=".png, .jpg, .gif" required>
+					<input type="submit" class='submit btn btn-xs' id="submit" value="submit">
+				</div>
+			</form>
+			<button class='btn btn-success btn-xs'><span class="glyphicon glyphicon-edit"></span> Edit Image</button>
+		</div>
 	</div>
 	<div class="row">
 		<div id="status" align="center"></div>
@@ -49,31 +60,12 @@
 			<label>Bahan Produk : </label> ----<br>
 			<label>Kode : </label> <?php echo "<b><font color='red'>".strtoupper($data['kode'])."</font></b>" ?><br>
 		</div>
-		<div>
-			<table>
-				<tr>
-					<td id="field_name" contenteditable="true"><?php echo $data['item_name']; ?></td>
-				<tr>
-			</table>
-		</div>
 	</div>
 </div>
 <script type="text/javascript">
-$(function(){
-	//acknowledgement message
-    var message_status = $("#status");
-    $("td[contenteditable=true]").blur(function(){
-        var field_userid = $(this).attr("id") ;
-        var value = $(this).text() ;
-        $.post('ajax.php' , field_userid + "=" + value, function(data){
-            if(data != '')
-			{
-				message_status.show();
-				message_status.text(data);
-				//hide the message
-				setTimeout(function(){message_status.hide()},3000);
-			}
-        });
+$(document).ready(function(){
+    $("button").click(function(){
+        $("#editImg").toggle(1000);
     });
 });
 </script>

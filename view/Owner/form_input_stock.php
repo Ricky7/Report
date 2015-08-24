@@ -164,7 +164,7 @@ $(document).ready(function(){
 
 		            <div class="col-xs-4 selectContainer">
 		                <label class="control-label">Gambar (Maks 100Kb)</label>
-		                <input type="file" name="image" id="image" class="form-control" required>
+		                <input type="file" name="image" id="image" accept=".png, .jpg, .gif" class="form-control" required>
 		            </div>
 
 		        </div>
