@@ -56,6 +56,7 @@ $(function()
 					$("#insert_search").show();
 					$("#insert_search").append(html);
 					$("#flash").hide();
+					$(".emp").hide();
 				}
 
 			});

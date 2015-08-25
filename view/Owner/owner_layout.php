@@ -35,6 +35,7 @@
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="form_input_stock.php">Input Stock</a></li>
 						<li><a href="form_warna.php">Input Warna</a></li>
+						<li><a href="informasi.php">Informasi</a></li>
 						<li><a href="laporan.php">Laporan</a></li>
 					</ul>
 				</li>
